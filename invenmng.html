@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+      /* General Reset */
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+      }
+  
+      body {
+          background: linear-gradient(120deg, #6f8e99, #4a5f67); /* Smooth gradient blend */
+          color: #ffffff;
+          min-height: 100vh;
+          padding-bottom: 2rem;
+      }
+  
+      /* Navbar */
+      .navbar {
+          background: #2d3a3f; /* Deepened background for better contrast */
+          padding: 1.5rem 2rem;
+          text-align: center;
+          color: #f5c000; /* Gold color for highlights */
+          font-size: 2rem;
+          font-weight: bold;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          border-bottom: 3px solid #444;
+          margin-bottom: 2rem;
+      }
+  
+      .navbar:hover {
+          background: #34454d; /* Softer hover for better blending */
+          transition: background 0.4s ease, transform 0.3s ease;
+          transform: translateY(-3px); /* Slight lift on hover */
+      }
+  
+      /* Container */
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+      }
+  
+      /* Dashboard Cards */
+      .dashboard {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+          margin-bottom: 2.5rem;
+      }
+  
+      .card {
+          background: #2d3a3f; /* Match navbar for consistency */
+          color: #ffffff;
+          border-radius: 15px;
+          padding: 2rem;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), inset 0 1px 3px rgba(255, 255, 255, 0.1);
+          transition: transform 0.3s, box-shadow 0.4s ease;
+      }
+  
+      .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+          background: #38494f; /* Slightly lighter hover effect */
+      }
+  
+      .card h3 {
+          margin-bottom: 1.5rem;
+          color: #f5c000; /* Gold text for headers */
+      }
+  
+      .card p {
+          font-size: 1.6rem;
+          font-weight: bold;
+          color: #d9d9d9;
+      }
+  
+      /* Table */
+      .inventory-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 1.5rem;
+          border-radius: 10px;
+          overflow: hidden;
+      }
+  
+      .inventory-table th {
+          background: #2d3a3f; /* Match navbar and cards */
+          color: #f5c000; /* Gold for headers */
+          font-size: 1.2rem;
+          padding: 1rem;
+          text-align: left;
+      }
+  
+      .inventory-table td {
+          background: #3e4f56; /* Slightly lighter for contrast */
+          color: #d9d9d9;
+          border-bottom: 1px solid #555;
+          padding: 0.75rem;
+      }
+  
+      .inventory-table tr:hover td {
+          background: #2d3a3f; /* Hover effect matching cards */
+      }
+  
+      .status-low {
+          color: #ff6b6b; /* Highlight low status in red */
+          font-weight: bold;
+      }
+  
+      .status-good {
+          color: #4cd137; /* Green for good status */
+          font-weight: bold;
+      }
+  
+      /* Buttons */
+      .btn {
+          padding: 0.75rem 1.5rem;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          margin-right: 0.5rem;
+      }
+  
+      .btn-primary {
+          background: #f5c000; /* Gold primary button */
+          color: #121212; /* Contrast dark text */
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      }
+  
+      .btn-primary:hover {
+          background: #e0b200; /* Slight darkening */
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      }
+  
+      .btn-danger {
+          background: #b31217; /* Red for danger buttons */
+          color: white;
+      }
+  
+      .btn-danger:hover {
+          background: #e52d27; /* Brighter red on hover */
+      }
+  
+      /* Form */
+      .form-group {
+          margin-bottom: 1.5rem;
+      }
+  
+      .form-group input {
+          width: 100%;
+          padding: 0.75rem;
+          border: none;
+          border-radius: 10px;
+          font-size: 1rem;
+          background: #3e4f56; /* Match table cells */
+          color: #d9d9d9;
+          margin-bottom: 0.5rem;
+      }
+  
+      .form-group input::placeholder {
+          color: #aaa;
+      }
+  
+      .form-group input:focus {
+          outline: none;
+          background: #2d3a3f; /* Match cards */
+          box-shadow: 0 0 10px #f5c000; /* Gold glow on focus */
+      }
+  
+      /* Footer */
+      .footer {
+          text-align: center;
+          padding: 1rem;
+          background: #2d3a3f;
+          color: #d9d9d9;
+          border-top: 2px solid #444;
+          font-size: 0.9rem;
+      }
+  </style>
+  
+  
+</head>
+<body>
+    <nav class="navbar">
+        Inventory Management System
+    </nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <div class="card">
+                <h3>Total Items</h3>
+                <p id="totalItems">150</p>
+            </div>
+            <div class="card">
+                <h3>Low Stock Items</h3>
+                <p id="lowStock">12</p>
+            </div>
+            <div class="card">
+                <h3>Total Value</h3>
+                <p id="totalValue">$25,000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Add New Item</h3>
+            <form id="addItemForm">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" placeholder="Enter item name" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" placeholder="Enter quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price per Unit</label>
+                    <input type="number" id="price" step="0.01" placeholder="Enter price" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Item</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Inventory List</h3>
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price per Unit</th>
+                        <th>Total Value</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryList">
+                    <tr>
+                        <td>Laptop</td>
+                        <td>25</td>
+                        <td>$800</td>
+                        <td>$20,000</td>
+                        <td class="status-good">In Stock</td>
+                        <td>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mouse</td>
+                        <td>5</td>
+                        <td>$20</td>
+                        <td>$100</td>
+                        <td class="status-low">Low Stock</td>
+                        <td>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>Inventory Overview</h3>
+            <canvas id="inventoryChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Chart script remains unchanged
+    </script>
+</body>
+</html>

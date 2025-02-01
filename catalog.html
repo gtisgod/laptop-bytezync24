@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+      }
+      @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+           
+            .welcome-text p {
+                font-size: 1.2rem;
+            }
+        }
+      nav {
+          background-color: rgba(255, 255, 255, 0.95);
+          padding: 1.5rem;
+          position: fixed;
+          width: 100%;
+          top: 0;
+          z-index: 1000;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      .nav-links {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+      }
+
+      .nav-links a {
+          color: #333;
+          text-decoration: none;
+          font-size: 1.1rem;
+          margin: 0 1rem;
+          transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+          color: #007bff;
+      }
+
+      .search-container {
+          display: flex;
+          align-items: center;
+      }
+
+      .search-container input {
+          height: 40px;
+          width: 200px;
+          border: 1px solid #000000;
+          border-radius: 20px;
+          padding: 0 15px;
+          font-size: 1rem;
+          outline: none;
+          transition: width 0.3s ease;
+      }
+
+      .search-container input:focus {
+          width: 250px;
+          border-color: #007bff;
+      }
+
+      .search-container .search-icon {
+          margin-left: -30px;
+          font-size: 1.2rem;
+          color: #aaa;
+          cursor: pointer;
+          transition: color 0.3s ease;
+      }
+
+      .search-container .search-icon:hover {
+          color: #007bff;
+      }
+
+      header h1 {
+          margin: 0;
+      }
+
+      .catalog-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          padding: 20px;
+          margin-top: 80px; /* Added margin to avoid header overlap */
+      }
+
+      .laptop-card {
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          margin: 20px;
+          width: 280px;
+          text-align: center;
+          padding: 20px;
+          transition: transform 0.2s;
+      }
+
+      .laptop-card:hover {
+          transform: scale(1.05);
+      }
+
+      .laptop-card img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 8px;
+      }
+
+      .laptop-card h2 {
+          font-size: 20px;
+          margin-top: 10px;
+      }
+
+      .laptop-card p {
+          color: #555;
+          font-size: 16px;
+      }
+
+      .laptop-card .price {
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+          margin-top: 10px;
+      }
+
+      .add-to-cart-btn {
+          margin-top: 20px;
+          padding: 10px 15px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .add-to-cart-btn:hover {
+          background-color: #0056b3;
+          transform: scale(1.05);
+      }
+
+      footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: 10px 0;
+          position: fixed;
+          width: 100%;
+          bottom: 0;
+      }
+  </style>
+
+</head>
+
+<body>
+
+  <nav>
+
+    <div class="nav-links">
+
+        <a href="frontend.html">Home</a>
+
+        <a href="catalog.html">Catalog</a>
+
+        <a href="contact.html">Contact</a>
+
+        <a href="login.html">Login</a>
+
+        <a href="cart.html">Cart</a>
+
+    </div>
+
+    <div class="search-container">
+
+        <input type="text" placeholder="Search...">
+
+        <span class="search-icon">🔍</span>
+
+    </div>
+
+  </nav>
+
+  <div class="catalog-container">
+
+    <!-- Laptop 1 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="100">
+        <img src="https://i5.walmartimages.com/asr/a9695efc-89cc-40de-8ca2-703812bb8af8.39a06f7ec8200bc9cf7a9fe77973c2ad.jpeg" alt="Laptop 1">
+        <h2>Lenovo Ideapad</h2>
+        <p>Intel Core i7, 16GB RAM, 512GB SSD</p>
+        <div class="price">₹65,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Lenovo Ideapad', 65000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 2 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="200">
+        <img src="https://imgs.search.brave.com/47FUIwrgIZ8LOLz9K9eTKHFuDMbi77FUh19GFfcm9wY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0LzhT/QlpMemtzZUVmVjVn/bkxzSjdKVUstMzIw/LTgwLmpwZw" alt="Laptop 2">
+        <h2>Dell G15</h2>
+        <p>AMD Ryzen 5, 8GB RAM, 256GB SSD</p>
+        <div class="price">₹70,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Dell G15', 70000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 3 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="300">
+        <img src="https://imgs.search.brave.com/j3krwc9HfEqNvfw5TCah4WMwL8lDDzcy0b-kqja1EGs/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzgxZEQyZ08waFFM/LmpwZw" alt="Laptop 3">
+        <h2>Dell G15</h2>
+        <p>Intel Core i5, 8GB RAM, 1TB HDD</p>
+        <div class="price">₹50,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Dell G15', 50000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 4 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="400">
+        <img src="https://imgs.search.brave.com/0K0rqHU5Txojz257r9xag4y3XMkmbkmYMldcjPsoUag/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9oaXBz/LmhlYXJzdGFwcHMu/Y29tL3ZhZGVyLXBy/b2QuczMuYW1hem9u/YXdzLmNvbS8xNzMw/MTM2OTczLUFTVVMt/VFVGLUYxNS0xNS02/LWluY2gtRkhELTE0/NEh6LUdhbWluZy1M/YXB0b3AtSW50ZWwt/Q29yZS1pNy0xMzYy/MEgtTlZJRElBLUdl/Rm9yY2UtUlRYLTQw/NjAtMTZHQi1ERFI1/LTFUQi1TU0QtTWVj/aGEtR3JheS0yMDI0/X2FkMTg4MjAzLWEw/MDAtNDczNC04Njg1/LThhNDg3ODljOTIw/NC41ZGRmYTY0YTEx/MWVmNzljMjk3Mjlk/N2Q2OGU3NDlkOC5q/cGc_Y3JvcD0xeHc6/MS4wMHhoO2NlbnRl/cix0b3AmcmVzaXpl/PTk4MDoq" alt="Laptop 4">
+        <h2>Alienware</h2>
+        <p>Intel Core i9, 32GB RAM, 1TB SSD</p>
+        <div class="price">₹90,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Alienware', 90000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 5 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="500">
+        <img src="https://imgs.search.brave.com/2mjHXWLJULsc1bv5XPz5Uh2S7Tvxy6JH6LUiurVboRQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzcxWHdDWXhNVUhM/LmpwZw" alt="Laptop 5">
+        <h2>Asus</h2>
+        <p>AMD Ryzen 7, 16GB RAM, 512GB SSD</p>
+        <div class="price">₹55,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Asus', 55000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 6 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="600">
+        <img src="https://imgs.search.brave.com/RmR6yECxCuNa7U2tofKd0dm6ouEMta3WjhHyO8yRo78/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jMS5u/ZXdlZ2dpbWFnZXMu/Y29tL3Byb2R1Y3Rp/bWFnZS9uYjMwMC9B/OFg1UzIzMDcwNDE0/M0VaSEE4LmpwZw" alt="Laptop 6">
+        <h2>Lenovo Thinkpad</h2>
+        <p>Intel Core i7, 16GB RAM, 1TB SSD</p>
+        <div class="price">₹45,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Lenovo Thinkpad', 45000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 7 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="700">
+        <img src="https://imgs.search.brave.com/CyJLN1CUt2t-xGy0jvZPj815bS_6ixzB8sL0f2Roayk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTFQTEt3aWs1Zkwu/anBn" alt="Laptop 7">
+        <h2>Asus</h2>
+        <p>Intel Core i5, 8GB RAM, 512GB SSD</p>
+        <div class="price">₹45,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Asus', 45000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 8 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="800">
+        <img src="https://imgs.search.brave.com/oDEgHtCgX9AvRL78o01kNQL8pU2SGHWTQbu3qP5aW2g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFKUU9QK2l1cUwu/anBn" alt="Laptop 8">
+        <h2>Alienware</h2>
+        <p>Intel Core i9, 16GB RAM, 512GB SSD</p>
+        <div class="price">₹70,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Alienware', 70000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 9 -->
+    <div class="laptop-card" data-aos="fade-up" data-aos-delay="900">
+        <img src="https://imgs.search.brave.com/omdZTyscs37TWvugQZyhR7blkqaC2ugCMv1gU5J7kUg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9oaXBz/LmhlYXJzdGFwcHMu/Y29tL3ZhZGVyLXBy/b2QuczMuYW1hem9u/YXdzLmNvbS8xNzI4/NDEzMzAyLTE3MTk3/NjEwNzItMTcxMTU0/NjM0OS1hc3VzLWdh/bWluZy1sYXB0b3At/NjYwNDFmYmVhODM5/MS5qcGc_Y3JvcD0x/eHc6MXhoO2NlbnRl/cix0b3AmcmVzaXpl/PTk4MDoq" alt="Laptop 9">
+        <h2>HP Pavilion</h2>
+        <p>Intel Core i7, 16GB RAM, 512GB SSD</p>
+        <div class="price">₹60,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('HP Pavilion', 60000)">Add to Cart</button>
+    </div>
+  
+      <!-- Laptop 10 -->
+      <div class="laptop-card" data-aos="fade-up" data-aos-delay="1000">
+          <img src="https://imgs.search.brave.com/7BZ9P_oufadp-0C80N3cnt_498OleNuWEwcboW4lAMU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzkxYVdmY3RVcHRM/LmpwZw" alt="Laptop 10">
+          <h2>Asus TUF</h2>
+          <p>AMD Ryzen 5, 16GB RAM, 512GB SSD</p>
+          <div class="price">₹65,000</div>
+          <button class="add-to-cart-btn" onclick="addToCart('Asus TUF', 65000)">Add to Cart</button>
+      </div>
+      <!-- Laptop 11 -->
+      <div class="laptop-card">
+        <img src="https://imgs.search.brave.com/0K0rqHU5Txojz257r9xag4y3XMkmbkmYMldcjPsoUag/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9oaXBz/LmhlYXJzdGFwcHMu/Y29tL3ZhZGVyLXBy/b2QuczMuYW1hem9u/YXdzLmNvbS8xNzMw/MTM2OTczLUFTVVMt/VFVGLUYxNS0xNS02/LWluY2gtRkhELTE0/NEh6LUdhbWluZy1M/YXB0b3AtSW50ZWwt/Q29yZS1pNy0xMzYy/MEgtTlZJRElBLUdl/Rm9yY2UtUlRYLTQw/NjAtMTZHQi1ERFI1/LTFUQi1TU0QtTWVj/aGEtR3JheS0yMDI0/X2FkMTg4MjAzLWEw/MDAtNDczNC04Njg1/LThhNDg3ODljOTIw/NC41ZGRmYTY0YTEx/MWVmNzljMjk3Mjlk/N2Q2OGU3NDlkOC5q/cGc_Y3JvcD0xeHc6/MS4wMHhoO2NlbnRl/cix0b3AmcmVzaXpl/PTk4MDoq" alt="Laptop 11">
+        <h2>Asus TUF 2 </h2>
+        <p>Intel Core i5, 8GB RAM, 512GB SSD</p>
+        <div class="price">₹80,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Asus TUF 2', 80000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 12 -->
+    <div class="laptop-card">
+        <img src="https://imgs.search.brave.com/omdZTyscs37TWvugQZyhR7blkqaC2ugCMv1gU5J7kUg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9oaXBz/LmhlYXJzdGFwcHMu/Y29tL3ZhZGVyLXBy/b2QuczMuYW1hem9u/YXdzLmNvbS8xNzI4/NDEzMzAyLTE3MTk3/NjEwNzItMTcxMTU0/NjM0OS1hc3VzLWdh/bWluZy1sYXB0b3At/NjYwNDFmYmVhODM5/MS5qcGc_Y3JvcD0x/eHc6MXhoO2NlbnRl/cix0b3AmcmVzaXpl/PTk4MDoq" alt="Laptop 12">
+        <h2>Asus ROG</h2>
+        <p>Intel Core i7, 16GB RAM, 1TB SSD</p>
+        <div class="price">₹1,50,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Asus ROG', 150000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 13 -->
+    <div class="laptop-card">
+        <img src="https://imgs.search.brave.com/m-1wnua8r_SDQbGoIXeWkCnUsZV8s_Lqga5MMTKn9ZE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFQM3p3SGRKeUwu/anBn" alt="Laptop 13">
+        <h2>Lenovo LOQ</h2>
+        <p>Intel Core i9, 32GB RAM, 512GB SSD</p>
+        <div class="price">₹80,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Lenevo LOQ', 80000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 14 -->
+    <div class="laptop-card">
+        <img src="https://imgs.search.brave.com/m-1wnua8r_SDQbGoIXeWkCnUsZV8s_Lqga5MMTKn9ZE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFQM3p3SGRKeUwu/anBn" alt="Laptop 14">
+        <h2>Lenovo LOQ 2 </h2>
+        <p>AMD Ryzen 7, 16GB RAM, 1TB SSD</p>
+        <div class="price">₹60,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Lenevo LOQ 2', 60000)">Add to Cart</button>
+    </div>
+
+    <!-- Laptop 15 -->
+    <div class="laptop-card">
+        <img src="https://imgs.search.brave.com/RnKb9-m6bqNhlC_fPvz9fN0qdj38fc2EeuEm-Xyshtc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFGLVdjcmlxNEwu/anBn" alt="Laptop 15">
+        <h2>Acer Nitro</h2>
+        <p>Intel Core i5, 8GB RAM, 256GB SSD</p>
+        <div class="price">₹50,000</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Acer Nitro', 65000)">Add to Cart</button>
+    </div>
+  </div>
+  
+  <script>
+    function addToCart(productName, productPrice) {
+      // Save the product to localStorage or sessionStorage
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const product = { name: productName, price: productPrice };
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Redirect to the cart page
+      window.location.href = "cart.html";
+    }
+  </script>
+        <div class="nav-links">
+          <a href="frontend.html">Home</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="contact.html">Contact</a>
+          <a href="login.html">Login</a>
+          <a href="cart.html">Cart</a>
+      </div>
+
+    </div>
+    <footer>
+      <div class="nav-links">
+          <a href="frontend.html">Home</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="contact.html">Contact</a>
+          <a href="login.html">Login</a>
+          <a href="cart.html">Cart</a>
+      </div>
+    </footer>

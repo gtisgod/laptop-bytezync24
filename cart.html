@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            background-color: #c1d8eeb2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: rgb(255, 255, 255);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .item-name {
+            font-size: 18px;
+            color: #333;
+            margin-right: 20px;
+        }
+
+        .item-price {
+            font-size: 16px;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 20px;
+            text-align: right;
+            color: #333;
+        }
+
+        .login-message {
+            text-align: center;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        .login-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .add-to-cart {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #0056b3;
+        }
+
+        .clear-cart {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .clear-cart:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shopping Cart</h1>
+
+        <!-- Check if user is logged in -->
+        <div class="login-message">
+            <p id="loginStatus"></p>
+            <p id="loginPrompt" style="display: none;">
+                You are not logged in. Please <a href="login.html" class="login-link">log in</a> to continue.
+            </p>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here dynamically -->
+        </div>
+
+        <div class="total">
+            Total: ₹<span id="totalPrice">0</span>
+        </div>
+
+        <!-- Clear Cart Button -->
+        <button class="clear-cart" id="clearCartBtn">Clear Cart</button>
+    </div>
+
+    <script>
+        // Simulate user login status
+        const isLoggedIn = false; // Change this to true to simulate a logged-in user
+
+        if (isLoggedIn) {
+            document.getElementById('loginStatus').innerText = "You are logged in.";
+        } else {
+            document.getElementById('loginStatus').innerText = "You are not logged in.";
+            document.getElementById('loginPrompt').style.display = "block";
+        }
+
+        // Initialize cart (if not present in localStorage)
+        if (!localStorage.getItem("cart")) {
+            localStorage.setItem("cart", JSON.stringify([]));
+        }
+
+        // Example items
+        const products = [
+            { name: "Lenevo Ideapad", price: 65000, image: "https://i5.walmartimages.com/asr/a9695efc-89cc-40de-8ca2-703812bb8af8.39a06f7ec8200bc9cf7a9fe77973c2ad.jpeg" },
+            { name: "Asus Tuf", price: 75000, image: "https://imgs.search.brave.com/7BZ9P_oufadp-0C80N3cnt_498OleNuWEwcboW4lAMU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzkxYVdmY3RVcHRM/LmpwZw" },
+            { name: "Acer Nitro", price: 50000, image: "https://imgs.search.brave.com/RnKb9-m6bqNhlC_fPvz9fN0qdj38fc2EeuEm-Xyshtc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFGLVdjcmlxNEwu/anBn" }
+        ];
+
+        // Display products for user to add to cart
+        function displayProducts() {
+            const cartItemsDiv = document.getElementById("cartItems");
+            products.forEach((product, index) => {
+                const productDiv = document.createElement("div");
+                productDiv.classList.add("cart-item");
+                productDiv.innerHTML = `
+                    <div class="item-details">
+                        <img src="${product.image}" alt="${product.name}" class="item-image">
+                        <span class="item-name">${product.name}</span>
+                    </div>
+                    <span class="item-price">₹${product.price}</span>
+                    <button class="add-to-cart" data-index="${index}">Add to Cart</button>
+                `;
+                cartItemsDiv.appendChild(productDiv);
+            });
+        }
+
+        // Function to add an item to the cart
+        function addToCart(index) {
+            const cart = JSON.parse(localStorage.getItem("cart"));
+            const product = products[index];
+            cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCart();
+        }
+
+        // Function to clear the cart
+        function clearCart() {
+            localStorage.setItem("cart", JSON.stringify([]));
+            updateCart();
+        }
+
+        // Update the cart UI
+        function updateCart() {
+            const cart = JSON.parse(localStorage.getItem("cart"));
+            const totalPriceElement = document.getElementById("totalPrice");
+            let total = 0;
+            const cartItemsDiv = document.getElementById("cartItems");
+            cartItemsDiv.innerHTML = "";
+
+            cart.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("cart-item");
+                itemDiv.innerHTML = `
+                    <div class="item-details">
+                        <img src="${item.image}" alt="${item.name}" class="item-image">
+                        <span class="item-name">${item.name}</span>
+                    </div>
+                    <span class="item-price">₹${item.price}</span>
+                `;
+                cartItemsDiv.appendChild(itemDiv);
+                total += item.price;
+            });
+
+            totalPriceElement.innerText = total;
+        }
+
+        // Add event delegation for "Add to Cart" buttons
+        document.addEventListener("DOMContentLoaded", () => {
+            displayProducts();
+            updateCart();
+
+            // Event delegation for dynamic content
+            document.getElementById("cartItems").addEventListener("click", (event) => {
+                if (event.target && event.target.classList.contains("add-to-cart")) {
+                    const index = event.target.getAttribute("data-index");
+                    addToCart(index);
+                }
+            });
+
+            // Event listener for "Clear Cart" button
+            document.getElementById("clearCartBtn").addEventListener("click", clearCart);
+        });
+    </script>
+    <footer>
+      <div class="nav-links">
+          <a href="frontend.html">Home</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="contact.html">Contact</a>
+          <a href="login.html">Login</a>
+          <a href="cart.html">Cart</a>
+      </div>
+    </footer>
+</body>
+</html>

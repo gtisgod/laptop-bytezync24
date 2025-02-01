@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Laptops - Premium Laptops at Best Prices</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #6f8e99;
+            overflow-x: hidden;
+        }
+
+        nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            height: 40px;
+            width: 200px;
+            border: 1px solid #000000;
+            border-radius: 20px;
+            padding: 0 15px;
+            font-size: 1rem;
+            outline: none;
+            transition: width 0.3s ease;
+        }
+
+        .search-container input:focus {
+            width: 250px;
+            border-color: #007bff;
+        }
+
+        .search-container .search-icon {
+            margin-left: -30px;
+            font-size: 1.2rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .search-container .search-icon:hover {
+            color: #007bff;
+        }
+
+        /* Video Section */
+        .laptop-section {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .welcome-text {
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .welcome-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .welcome-text p {
+            font-size: 1.5rem;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Products Section */
+        .bestsellers {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .price {
+            color: #007bff;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .add-to-cart-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 123, 255, 0.8); /* Semi-transparent blue */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease;
+        }
+        .product-container:hover .add-to-cart-button {
+            opacity: 1; /* Show button on hover */
+        }
+
+        @media (max-width: 768px) {
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+           
+            .welcome-text p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-links">
+            <a href="frontend.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html">Login</a>
+            <a href="cart.html">Cart</a>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </nav>
+
+    <section class="laptop-section">
+        <div class="video-background">
+            <video autoplay muted loop>
+                <source src="vidhack.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="welcome-text">
+            <h1>Welcome to Value Laptops</h1>
+            <p>Discover Premium Laptops at Unbeatable Prices</p>
+        </div>
+    </section>
+    <section class="bestsellers">
+      <h2 class="section-title" data-aos="fade-up">Best Sellers</h2>
+      <div class="product-grid">
+          <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="product-image">
+                  <img src="https://www.maplestore.in/cdn/shop/files/MacBook_Pro_16_in_M3_Pro_Max_Space_Black_PDP_Image_Position_1__en-IN_447c2db2-6f2a-4895-b550-124db59c9f16.jpg?v=1701917437" alt="MacBook Pro">
+              </div>
+              <div class="product-info">
+                  <h3>MacBook Pro M2</h3>
+                  <p class="price">₹1,10,000</p>
+              </div>
+          </div>
+          <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="product-image">
+                  <img src="https://imgs.search.brave.com/17ea35NyAQWduhhdEFEzM6cyEZLW7xXXz1zOROBSXTY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFyc29BTm03dEwu/anBn">
+              </div>
+              <div class="product-info">
+                  <h3>Dell XPS 15</h3>
+                  <p class="price">₹89,999</p>
+              </div>
+          </div>
+          <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="product-image">
+                  <img src="https://imgs.search.brave.com/F2KviEjxQiHtTBpTASo_pG1KnYNhVLAbbQ1RmPefjK8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWdz/LnNlYXJjaC5icmF2/ZS5jb20vMzBCLTVl/R1U2bkoza0VyWXhq/R29pa0JLSW05ZE5B/VGJucldqRDNTY1hU/US9yczpmaXQ6NTAw/OjA6MDowL2c6Y2Uv/YUhSMGNITTZMeTlw/Yldkei9Mbk5sWVhK/amFDNWljbUYyL1pT/NWpiMjB2V25SbFJV/RkovWm1zeVJVRktV/WGN0V0hnNC9ibVpY/UWxsUmJtODFPWFpY/L2MwMU9XVU41VmxR/d2VHVnAvV1M5eWN6/cG1hWFE2TlRZdy9P/ak15TURveE9qQXZa/enBqL1pTOWhTRkl3/WTBoTk5reDUvT1hw/ak1uZDBMMk5JU25a/YS9TRlpxWkVNeGNH/SlhSbTR2L1dsaE5k/V1F6WkROUFF6RnYv/WTBNMWFpOWlNakIy/V2tkcy9ibUpYVm10/aFYwWnpMMkZYL1NY/WmpTRXAyV2tkc2RG/cDUvT1hNdllqTmtl/VnBZVFhaWi9la0Uw/VDBSamVpOU9hbEUx/L1RHNUNkVnA2T1hC/aVdFSjIvTDJKSGJH/cGxWREZSWW0xay9a/bFZ0Vm5vLmpwZWc" alt="HP Spectre">
+              </div>
+              <div class="product-info">
+                  <h3>HP Spectre x360</h3>
+                  <p class="price">₹59,999</p>
+              </div>
+          </div>
+          <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+              <div class="product-image">
+                  <img src="https://imgs.search.brave.com/FGp7Tb9n2pIcwBAp161ZVRLcM1-XyHl35TujADoTmQ8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/MzE0SFZmb3ZIV1Mu/anBn" alt="Lenovo ThinkPad">
+              </div>
+              <div class="product-info">
+                  <h3>Lenovo ThinkPad X1</h3>
+                  <p class="price">₹69,999</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+      AOS.init({
+          duration: 1000,
+          once: true,
+          offset: 100
+      });
+  </script>
+</body>
+</html>
